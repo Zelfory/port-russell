@@ -1,0 +1,25 @@
+<%- include('partials/head', { title: 'Accueil' }) %>
+<body class="home">
+  <main class="home-grid">
+    <section class="home-intro">
+      <h1>Port de Plaisance Russell</h1>
+      <p>Espace de la capitainerie : gérez les catways, les réservations et les utilisateurs du port.</p>
+      <a class="link" href="/docs">Lire la documentation de l'API</a>
+    </section>
+    <section class="home-login">
+      <form id="login-form" novalidate>
+        <h2>Se connecter</h2>
+        <label>Adresse e-mail
+          <input type="email" name="email" autocomplete="username" required>
+        </label>
+        <label>Mot de passe
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <p id="login-error" class="error" role="alert" hidden></p>
+        <button type="submit" class="btn">Se connecter</button>
+      </form>
+    </section>
+  </main>
+  <script src="/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<%- include('partials/head', { title: 'Documentation' }) %>
+<body class="docs">
+  <header class="bar">
+    <a class="brand" href="/">Port de Plaisance Russell</a>
+    <nav><a href="/">Accueil</a></nav>
+  </header>
+  <main class="wrap">
+    <h1>Documentation de l'API</h1>
+    <p>Toutes les routes, sauf <code>POST /login</code>, exigent d'être connecté : le cookie <code>token</code> est posé à la connexion, ou envoyez l'en-tête <code>Authorization: Bearer &lt;token&gt;</code>. Les corps de requête sont en JSON.</p>
+
+    <h2>Authentification</h2>
+    <table>
+      <thead><tr><th>Méthode</th><th>Route</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td>POST</td><td>/login</td><td>Connexion. Corps : <code>{ "email", "password" }</code></td></tr>
+        <tr><td>GET</td><td>/logout</td><td>Déconnexion</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Catways</h2>
+    <p><code>:id</code> est le numéro du catway. Un catway : <code>{ catwayNumber, catwayType ("long" | "short"), catwayState }</code>.</p>
+    <table>
+      <thead><tr><th>Méthode</th><th>Route</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td>GET</td><td>/catways</td><td>Liste des catways</td></tr>
+        <tr><td>GET</td><td>/catways/:id</td><td>Détail d'un catway</td></tr>
+        <tr><td>POST</td><td>/catways</td><td>Création (numéro unique)</td></tr>
+        <tr><td>PUT</td><td>/catways/:id</td><td>Modifie l'état uniquement : <code>{ "catwayState" }</code></td></tr>
+        <tr><td>DELETE</td><td>/catways/:id</td><td>Suppression (refusée si le catway a des réservations)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Réservations</h2>
+    <p>Une réservation : <code>{ catwayNumber, clientName, boatName, startDate, endDate }</code>. <code>:idReservation</code> est l'identifiant de la réservation. Deux réservations ne peuvent pas se chevaucher sur un même catway.</p>
+    <table>
+      <thead><tr><th>Méthode</th><th>Route</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td>GET</td><td>/catways/:id/reservations</td><td>Réservations d'un catway</td></tr>
+        <tr><td>GET</td><td>/catways/:id/reservations/:idReservation</td><td>Détail d'une réservation</td></tr>
+        <tr><td>POST</td><td>/catways/:id/reservations</td><td>Création</td></tr>
+        <tr><td>PUT</td><td>/catways/:id/reservations/:idReservation</td><td>Modification</td></tr>
+        <tr><td>DELETE</td><td>/catways/:id/reservations/:idReservation</td><td>Suppression</td></tr>
+        <tr><td>GET</td><td>/reservations</td><td>Toutes les réservations (utilisée par le tableau de bord)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Utilisateurs</h2>
+    <p>Un utilisateur : <code>{ username, email, password }</code> (mot de passe de 8 caractères minimum, jamais renvoyé par l'API). <code>:email</code> est l'adresse e-mail de l'utilisateur.</p>
+    <table>
+      <thead><tr><th>Méthode</th><th>Route</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td>GET</td><td>/users</td><td>Liste des utilisateurs</td></tr>
+        <tr><td>GET</td><td>/users/:email</td><td>Détail d'un utilisateur</td></tr>
+        <tr><td>POST</td><td>/users</td><td>Création (e-mail unique)</td></tr>
+        <tr><td>PUT</td><td>/users/:email</td><td>Modification (le mot de passe est facultatif)</td></tr>
+        <tr><td>DELETE</td><td>/users/:email</td><td>Suppression (pas de son propre compte)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Codes de réponse</h2>
+    <table>
+      <thead><tr><th>Code</th><th>Signification</th></tr></thead>
+      <tbody>
+        <tr><td>200 / 201 / 204</td><td>Succès, création, suppression</td></tr>
+        <tr><td>400</td><td>Données invalides (le champ <code>message</code> explique pourquoi)</td></tr>
+        <tr><td>401</td><td>Non connecté ou identifiants incorrects</td></tr>
+        <tr><td>404</td><td>Ressource introuvable</td></tr>
+        <tr><td>409</td><td>Conflit : doublon ou période déjà réservée</td></tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

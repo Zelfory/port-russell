@@ -1,0 +1,22 @@
+<%- include('partials/head', { title: 'Tableau de bord' }) %>
+<body class="dash">
+  <header class="bar">
+    <a class="brand" href="/dashboard">Port de Plaisance Russell</a>
+    <nav>
+      <a href="/docs">Documentation</a>
+      <span class="who"><%= user.username %></span>
+      <a href="/logout">Se déconnecter</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <h1>Tableau de bord</h1>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <p id="notice" class="notice" role="status" hidden></p>
+    <section class="panel">
+      <form id="entity-form" novalidate></form>
+    </section>
+    <div class="table-scroll"><table id="entity-table"></table></div>
+  </main>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
